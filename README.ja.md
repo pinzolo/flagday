@@ -6,18 +6,18 @@
 [![Godoc](http://img.shields.io/badge/godoc-reference-blue.svg)](https://godoc.org/github.com/pinzolo/flagday)
 [![license](http://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/pinzolo/flagday/master/LICENSE)
 
-## Description
+## 概要
 
-flagday is library for public holidays in Japan.
+flagday は日本の祝日を扱うライブラリです。
 
-## Specification
+## 特徴
 
-* It is in compliance with the law concerning national holidays.
-* Compatible holidays after 20th July 1948.
-* flagday does not use data file, basically it can be used without updating except for the following conditions.
-    * Increase and decrease of holidays and migration due to revision of law
-    * Deviation of equinox due to crustal deformation
-    * Holidays of Imperial related condolences and auspicious event
+* [国民の休日に関する法律](http://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=323AC1000000178&openerCode=1)に準じています。
+* 1948年7月20日以降の祝日に対応しています。
+* データファイルを使用していないので、下記の条件を除けば基本的には更新無しで使用できます。
+    * 法律の改正による祝日の増減および移動
+    * 地殻変動などによる春分・秋分の日のずれ
+    * 皇室関連の慶弔時による当年限りの休日
 
 ## Install
 
