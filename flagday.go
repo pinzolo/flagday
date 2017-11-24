@@ -95,7 +95,7 @@ func IsPublicHolidayTime(tm time.Time) bool {
 
 func publicHoliday(def Definition, year int) (Date, error) {
 	switch def.Type {
-	case FixedDay:
+	case FixedDay, ImperialRelated:
 		return fixedPublicHoliday(def, year), nil
 	case HappyMonday:
 		return happyMonday(def, year), nil

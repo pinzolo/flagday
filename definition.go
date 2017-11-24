@@ -1,6 +1,9 @@
 package flagday
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 // DefType is type of definition.
 type DefType int
@@ -12,6 +15,8 @@ const (
 	HappyMonday
 	// EquinoxDay means that public holiday is equinox day.
 	EquinoxDay
+	// ImperialRelated means that public holiday is imperial related holiday (that year's limit).
+	ImperialRelated
 )
 
 // Definition is definition of public holiday in Japan.
@@ -30,7 +35,9 @@ type Definition struct {
 func DefsInYear(year int) []Definition {
 	var defs []Definition
 	for _, def := range AllDefs {
+		fmt.Printf("year: %d, def.Begin: %d, def.End: %d, def.Begin <= year && (year <= def.End || def.End == 0): %v\n", year, def.Begin, def.End, def.Begin <= year && (year <= def.End || def.End == 0))
 		if def.Begin <= year && (year <= def.End || def.End == 0) {
+			fmt.Println("def added")
 			defs = append(defs, def)
 		}
 	}
@@ -69,6 +76,14 @@ var AllDefs = []Definition{
 		Begin: 1967,
 	},
 	Definition{
+		Type:  ImperialRelated,
+		Name:  "昭和天皇の大喪の礼",
+		Month: 2,
+		Day:   24,
+		Begin: 1989,
+		End:   1989,
+	},
+	Definition{
 		Type:  EquinoxDay,
 		Name:  "春分の日",
 		Month: 3,
@@ -77,6 +92,14 @@ var AllDefs = []Definition{
 			day := 0.24242*float64(year) - math.Floor(float64(year)/4.0) + 35.84
 			return newPublicHoliday(def, year, def.Month, int(day))
 		},
+	},
+	Definition{
+		Type:  ImperialRelated,
+		Name:  "皇太子明仁親王の結婚の儀",
+		Month: 4,
+		Day:   10,
+		Begin: 1959,
+		End:   1959,
 	},
 	Definition{
 		Type:  FixedDay,
@@ -121,6 +144,14 @@ var AllDefs = []Definition{
 		Month: 5,
 		Day:   5,
 		Begin: 1949,
+	},
+	Definition{
+		Type:  ImperialRelated,
+		Name:  "皇太子徳仁親王の結婚の儀",
+		Month: 6,
+		Day:   9,
+		Begin: 1993,
+		End:   1993,
 	},
 	Definition{
 		Type:  FixedDay,
@@ -190,6 +221,14 @@ var AllDefs = []Definition{
 		Month: 11,
 		Day:   3,
 		Begin: 1948,
+	},
+	Definition{
+		Type:  ImperialRelated,
+		Name:  "即位礼正殿の儀",
+		Month: 11,
+		Day:   12,
+		Begin: 1990,
+		End:   1990,
 	},
 	Definition{
 		Type:  FixedDay,
