@@ -93,6 +93,11 @@ func IsPublicHolidayTime(tm time.Time) bool {
 	return IsPublicHoliday(tm.Year(), int(tm.Month()), tm.Day())
 }
 
+// ClearCache clear internal cache.
+func ClearCache() {
+	cache = make(map[int][]Date)
+}
+
 func publicHoliday(def Definition, year int) (Date, error) {
 	switch def.Type {
 	case FixedDay, ImperialRelated:

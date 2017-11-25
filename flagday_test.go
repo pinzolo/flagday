@@ -128,3 +128,14 @@ func TestIsPublicHolidayTime(t *testing.T) {
 		t.Errorf("2017/11/24 is public holiday, but IsPublicHoliday returns true")
 	}
 }
+
+func TestClearCache(t *testing.T) {
+	InYear(2017)
+	if len(cache) == 0 {
+		t.Error("cache length should be zero")
+	}
+	ClearCache()
+	if len(cache) != 0 {
+		t.Error("cache length should be zero after ClearCache called")
+	}
+}
