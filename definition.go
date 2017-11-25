@@ -1,7 +1,6 @@
 package flagday
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -35,9 +34,7 @@ type Definition struct {
 func DefsInYear(year int) []Definition {
 	var defs []Definition
 	for _, def := range AllDefs {
-		fmt.Printf("year: %d, def.Begin: %d, def.End: %d, def.Begin <= year && (year <= def.End || def.End == 0): %v\n", year, def.Begin, def.End, def.Begin <= year && (year <= def.End || def.End == 0))
 		if def.Begin <= year && (year <= def.End || def.End == 0) {
-			fmt.Println("def added")
 			defs = append(defs, def)
 		}
 	}
