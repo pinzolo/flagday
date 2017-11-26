@@ -14,6 +14,9 @@ func TestWeddingOfPrinceAkihito(t *testing.T) {
 	if d.Name() != "皇太子明仁親王の結婚の儀" {
 		t.Errorf("invalid holiday name, got %s", d.Name())
 	}
+	if d.Kind() != ImperialRelated {
+		t.Errorf("kind mismatch, expected %v but got %v", ImperialRelated, d.Kind())
+	}
 	_, err = PublicHolidayOf(1960, 4, 10)
 	if err == nil {
 		t.Errorf("1960/04/10 is not holiday")
@@ -31,6 +34,9 @@ func TestFuneralCeremonyOfEmperorShowa(t *testing.T) {
 	}
 	if d.Name() != "昭和天皇の大喪の礼" {
 		t.Errorf("invalid holiday name, got %s", d.Name())
+	}
+	if d.Kind() != ImperialRelated {
+		t.Errorf("kind mismatch, expected %v but got %v", ImperialRelated, d.Kind())
 	}
 	_, err = PublicHolidayOf(1990, 2, 24)
 	if err == nil {
@@ -50,6 +56,9 @@ func TestCeremonyOfSokuiReiseiden(t *testing.T) {
 	if d.Name() != "即位礼正殿の儀" {
 		t.Errorf("invalid holiday name, got %s", d.Name())
 	}
+	if d.Kind() != ImperialRelated {
+		t.Errorf("kind mismatch, expected %v but got %v", ImperialRelated, d.Kind())
+	}
 	_, err = PublicHolidayOf(1991, 11, 12)
 	if err == nil {
 		t.Errorf("1990/02/24 is not holiday")
@@ -67,6 +76,9 @@ func TestWeddingOfPrinceNaruhito(t *testing.T) {
 	}
 	if d.Name() != "皇太子徳仁親王の結婚の儀" {
 		t.Errorf("invalid holiday name, got %s", d.Name())
+	}
+	if d.Kind() != ImperialRelated {
+		t.Errorf("kind mismatch, expected %v but got %v", ImperialRelated, d.Kind())
 	}
 	_, err = PublicHolidayOf(1994, 6, 9)
 	if err == nil {

@@ -16,6 +16,8 @@ const (
 	NationalHoliday
 	// SubstituteHoliday means that holiday is substitute holiday.
 	SubstituteHoliday
+	// ImperialRelated means that holiday is Imperial related holiday.
+	ImperialRelated
 )
 
 // Date public holiday information.
@@ -80,6 +82,10 @@ func newNationalHoliday(year, month, day int) Date {
 
 func newSubstituteHoliday(year, month, day int) Date {
 	return NewDate(year, month, day, "振替休日", SubstituteHoliday)
+}
+
+func newImperialRelatedHoliday(def Definition, year, day int) Date {
+	return NewDate(year, def.Month, day, def.Name, ImperialRelated)
 }
 
 func jst() *time.Location {
