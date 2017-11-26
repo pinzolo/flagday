@@ -73,7 +73,7 @@ func NewDate(year, month, day int, name string, kind HolidayKind) Date {
 }
 
 func newPublicHoliday(def Definition, year, day int) Date {
-	return NewDate(year, def.Month, day, def.Name, PublicHoliday)
+	return NewDate(year, def.Month(), day, def.Name(), PublicHoliday)
 }
 
 func newNationalHoliday(year, month, day int) Date {
@@ -85,7 +85,7 @@ func newSubstituteHoliday(year, month, day int) Date {
 }
 
 func newImperialRelatedHoliday(def Definition, year, day int) Date {
-	return NewDate(year, def.Month, day, def.Name, ImperialRelated)
+	return NewDate(year, def.Month(), day, def.Name(), ImperialRelated)
 }
 
 func jst() *time.Location {

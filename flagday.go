@@ -99,41 +99,41 @@ func ClearCache() {
 }
 
 func publicHoliday(def Definition, year int) (Date, error) {
-	switch def.Type {
+	switch def.Type() {
 	case FixedDay:
 		return fixedPublicHoliday(def, year), nil
 	case HappyMonday:
 		return happyMonday(def, year), nil
 	case EquinoxDay:
-		return def.Func(def, year), nil
+		return def.Func()(def, year), nil
 	case ImperialRelatedHoliday:
 		return imperialRelatedHoliday(def, year), nil
 	default:
-		if def.Func == nil {
+		if def.Func() == nil {
 			return Date{}, errors.New("cannot get public holiday")
 		}
-		return def.Func(def, year), nil
+		return def.Func()(def, year), nil
 	}
 }
 
 func fixedPublicHoliday(def Definition, year int) Date {
-	return newPublicHoliday(def, year, def.Day)
+	return newPublicHoliday(def, year, def.Day())
 }
 
 func happyMonday(def Definition, year int) Date {
-	fday := firstDate(year, def.Month)
+	fday := firstDate(year, def.Month())
 	var days int
 	if int(fday.Weekday()) <= int(time.Monday) {
-		days = (def.WeekNum-1)*7 - int(fday.Weekday()) + int(time.Monday)
+		days = (def.WeekNum()-1)*7 - int(fday.Weekday()) + int(time.Monday)
 	} else {
-		days = def.WeekNum*7 - int(fday.Weekday()) + int(time.Monday)
+		days = def.WeekNum()*7 - int(fday.Weekday()) + int(time.Monday)
 	}
 	tm := fday.AddDate(0, 0, days)
 	return newPublicHoliday(def, year, tm.Day())
 }
 
 func imperialRelatedHoliday(def Definition, year int) Date {
-	return newImperialRelatedHoliday(def, year, def.Day)
+	return newImperialRelatedHoliday(def, year, def.Day())
 }
 
 func firstDate(year int, month int) time.Time {

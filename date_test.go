@@ -40,9 +40,9 @@ func TestTime(t *testing.T) {
 
 func getDef(name string, year int) (Definition, error) {
 	for _, def := range DefsInYear(year) {
-		if def.Name == name {
+		if def.Name() == name {
 			return def, nil
 		}
 	}
-	return Definition{}, fmt.Errorf("definition not found: %s", name)
+	return nil, fmt.Errorf("definition not found: %s", name)
 }
