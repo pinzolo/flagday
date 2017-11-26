@@ -38,10 +38,10 @@ func InMonth(year, month int) []Date {
 func PublicHolidays(defs []Definition, year int) []Date {
 	var dates []Date
 	for _, def := range defs {
-		date, err := publicHoliday(def, year)
-		if err != nil {
+		if def.Func() == nil {
 			continue
 		}
+		date := def.Func()(def, year)
 
 		// natinal holiday
 		if len(dates) > 0 {
@@ -96,24 +96,6 @@ func IsPublicHolidayTime(tm time.Time) bool {
 // ClearCache clear internal cache.
 func ClearCache() {
 	cache = make(map[int][]Date)
-}
-
-func publicHoliday(def Definition, year int) (Date, error) {
-	switch def.Type() {
-	case FixedDay:
-		return fixedPublicHoliday(def, year), nil
-	case HappyMonday:
-		return happyMonday(def, year), nil
-	case EquinoxDay:
-		return def.Func()(def, year), nil
-	case ImperialRelatedHoliday:
-		return imperialRelatedHoliday(def, year), nil
-	default:
-		if def.Func() == nil {
-			return Date{}, errors.New("cannot get public holiday")
-		}
-		return def.Func()(def, year), nil
-	}
 }
 
 func fixedPublicHoliday(def Definition, year int) Date {

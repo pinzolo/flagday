@@ -10,10 +10,7 @@ func TestTime(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	d, err := publicHoliday(def, 2017)
-	if err != nil {
-		t.Error(err)
-	}
+	d := fixedPublicHoliday(def, 2017)
 	tm := d.Time()
 	if tm.Year() != d.Year() {
 		t.Errorf("converted time should have %d as year, but got %d", d.Year(), tm.Year())

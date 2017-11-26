@@ -91,6 +91,7 @@ var AllDefs = []Definition{
 		name:    "元日",
 		month:   1,
 		day:     1,
+		fn:      fixedPublicHoliday,
 		begin:   1949,
 	},
 	definition{
@@ -98,6 +99,7 @@ var AllDefs = []Definition{
 		name:    "成人の日",
 		month:   1,
 		day:     15,
+		fn:      fixedPublicHoliday,
 		begin:   1949,
 		end:     1999,
 	},
@@ -106,6 +108,7 @@ var AllDefs = []Definition{
 		name:    "成人の日",
 		month:   1,
 		weekNum: 2,
+		fn:      happyMonday,
 		begin:   2000,
 	},
 	definition{
@@ -113,6 +116,7 @@ var AllDefs = []Definition{
 		name:    "建国記念の日",
 		month:   2,
 		day:     11,
+		fn:      fixedPublicHoliday,
 		begin:   1967,
 	},
 	definition{
@@ -120,6 +124,7 @@ var AllDefs = []Definition{
 		name:    "昭和天皇の大喪の礼",
 		month:   2,
 		day:     24,
+		fn:      imperialRelatedHoliday,
 		begin:   1989,
 		end:     1989,
 	},
@@ -127,17 +132,18 @@ var AllDefs = []Definition{
 		defType: EquinoxDay,
 		name:    "春分の日",
 		month:   3,
-		begin:   1949,
 		fn: func(def Definition, year int) Date {
 			day := 0.24242*float64(year) - math.Floor(float64(year)/4.0) + 35.84
 			return newPublicHoliday(def, year, int(day))
 		},
+		begin: 1949,
 	},
 	definition{
 		defType: ImperialRelatedHoliday,
 		name:    "皇太子明仁親王の結婚の儀",
 		month:   4,
 		day:     10,
+		fn:      imperialRelatedHoliday,
 		begin:   1959,
 		end:     1959,
 	},
@@ -146,6 +152,7 @@ var AllDefs = []Definition{
 		name:    "天皇誕生日",
 		month:   4,
 		day:     29,
+		fn:      fixedPublicHoliday,
 		begin:   1949,
 		end:     1988,
 	},
@@ -154,6 +161,7 @@ var AllDefs = []Definition{
 		name:    "みどりの日",
 		month:   4,
 		day:     29,
+		fn:      fixedPublicHoliday,
 		begin:   1989,
 		end:     2006,
 	},
@@ -162,6 +170,7 @@ var AllDefs = []Definition{
 		name:    "昭和の日",
 		month:   4,
 		day:     29,
+		fn:      fixedPublicHoliday,
 		begin:   2007,
 	},
 	definition{
@@ -169,6 +178,7 @@ var AllDefs = []Definition{
 		name:    "憲法記念日",
 		month:   5,
 		day:     3,
+		fn:      fixedPublicHoliday,
 		begin:   1967,
 	},
 	definition{
@@ -176,6 +186,7 @@ var AllDefs = []Definition{
 		name:    "みどりの日",
 		month:   5,
 		day:     4,
+		fn:      fixedPublicHoliday,
 		begin:   2007,
 	},
 	definition{
@@ -183,6 +194,7 @@ var AllDefs = []Definition{
 		name:    "こどもの日",
 		month:   5,
 		day:     5,
+		fn:      fixedPublicHoliday,
 		begin:   1949,
 	},
 	definition{
@@ -190,6 +202,7 @@ var AllDefs = []Definition{
 		name:    "皇太子徳仁親王の結婚の儀",
 		month:   6,
 		day:     9,
+		fn:      imperialRelatedHoliday,
 		begin:   1993,
 		end:     1993,
 	},
@@ -198,6 +211,7 @@ var AllDefs = []Definition{
 		name:    "海の日",
 		month:   7,
 		day:     20,
+		fn:      fixedPublicHoliday,
 		begin:   1996,
 		end:     2002,
 	},
@@ -206,6 +220,7 @@ var AllDefs = []Definition{
 		name:    "海の日",
 		month:   7,
 		weekNum: 3,
+		fn:      happyMonday,
 		begin:   2003,
 	},
 	definition{
@@ -213,6 +228,7 @@ var AllDefs = []Definition{
 		name:    "山の日",
 		month:   8,
 		day:     11,
+		fn:      fixedPublicHoliday,
 		begin:   2016,
 	},
 	definition{
@@ -220,6 +236,7 @@ var AllDefs = []Definition{
 		name:    "敬老の日",
 		month:   9,
 		day:     15,
+		fn:      fixedPublicHoliday,
 		begin:   1966,
 		end:     2002,
 	},
@@ -228,6 +245,7 @@ var AllDefs = []Definition{
 		name:    "敬老の日",
 		month:   9,
 		weekNum: 3,
+		fn:      happyMonday,
 		begin:   2003,
 	},
 	definition{
@@ -245,6 +263,7 @@ var AllDefs = []Definition{
 		name:    "体育の日",
 		month:   10,
 		day:     10,
+		fn:      fixedPublicHoliday,
 		begin:   1966,
 		end:     1999,
 	},
@@ -253,6 +272,7 @@ var AllDefs = []Definition{
 		name:    "体育の日",
 		month:   10,
 		weekNum: 2,
+		fn:      happyMonday,
 		begin:   2000,
 	},
 	definition{
@@ -260,6 +280,7 @@ var AllDefs = []Definition{
 		name:    "文化の日",
 		month:   11,
 		day:     3,
+		fn:      fixedPublicHoliday,
 		begin:   1948,
 	},
 	definition{
@@ -267,6 +288,7 @@ var AllDefs = []Definition{
 		name:    "即位礼正殿の儀",
 		month:   11,
 		day:     12,
+		fn:      imperialRelatedHoliday,
 		begin:   1990,
 		end:     1990,
 	},
@@ -275,6 +297,7 @@ var AllDefs = []Definition{
 		name:    "勤労感謝の日",
 		month:   11,
 		day:     23,
+		fn:      fixedPublicHoliday,
 		begin:   1948,
 	},
 	definition{
@@ -282,6 +305,7 @@ var AllDefs = []Definition{
 		name:    "天皇誕生日",
 		month:   12,
 		day:     23,
+		fn:      fixedPublicHoliday,
 		begin:   1989,
 	},
 }
