@@ -98,20 +98,29 @@ func ClearCache() {
 	cache = make(map[int][]Date)
 }
 
-func fixedPublicHoliday(def Definition, year int) Date {
+// FixedDateHoliday returns fixed date holiday.
+func FixedDateHoliday(def Definition, year int) Date {
 	return newPublicHoliday(def, year, def.Day())
 }
 
-func happyMonday(def Definition, year int) Date {
-	fday := firstDate(year, def.Month())
-	var days int
-	if int(fday.Weekday()) <= int(time.Monday) {
-		days = (def.WeekNum()-1)*7 - int(fday.Weekday()) + int(time.Monday)
-	} else {
-		days = def.WeekNum()*7 - int(fday.Weekday()) + int(time.Monday)
+// WeekNumHolidayFunc retuns function for getting nth weekday holiday.
+func WeekNumHolidayFunc(weekday time.Weekday) func(def Definition, year int) Date {
+	return func(def Definition, year int) Date {
+		fday := firstDate(year, def.Month())
+		var days int
+		if int(fday.Weekday()) <= int(weekday) {
+			days = (def.WeekNum()-1)*7 - int(fday.Weekday()) + int(weekday)
+		} else {
+			days = def.WeekNum()*7 - int(fday.Weekday()) + int(weekday)
+		}
+		tm := fday.AddDate(0, 0, days)
+		return newPublicHoliday(def, year, tm.Day())
+
 	}
-	tm := fday.AddDate(0, 0, days)
-	return newPublicHoliday(def, year, tm.Day())
+}
+
+func happyMonday(def Definition, year int) Date {
+	return WeekNumHolidayFunc(time.Monday)(def, year)
 }
 
 func imperialRelatedHoliday(def Definition, year int) Date {
