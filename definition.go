@@ -14,8 +14,8 @@ const (
 	HappyMonday
 	// EquinoxDay means that public holiday is equinox day.
 	EquinoxDay
-	// ImperialRelated means that public holiday is imperial related holiday (that year's limit).
-	ImperialRelated
+	// ImperialRelatedHoliday means that public holiday is imperial related holiday (that year's limit).
+	ImperialRelatedHoliday
 )
 
 // Definition is definition of public holiday in Japan.
@@ -73,7 +73,7 @@ var AllDefs = []Definition{
 		Begin: 1967,
 	},
 	Definition{
-		Type:  ImperialRelated,
+		Type:  ImperialRelatedHoliday,
 		Name:  "昭和天皇の大喪の礼",
 		Month: 2,
 		Day:   24,
@@ -87,11 +87,11 @@ var AllDefs = []Definition{
 		Begin: 1949,
 		Func: func(def Definition, year int) Date {
 			day := 0.24242*float64(year) - math.Floor(float64(year)/4.0) + 35.84
-			return newPublicHoliday(def, year, def.Month, int(day))
+			return newPublicHoliday(def, year, int(day))
 		},
 	},
 	Definition{
-		Type:  ImperialRelated,
+		Type:  ImperialRelatedHoliday,
 		Name:  "皇太子明仁親王の結婚の儀",
 		Month: 4,
 		Day:   10,
@@ -143,7 +143,7 @@ var AllDefs = []Definition{
 		Begin: 1949,
 	},
 	Definition{
-		Type:  ImperialRelated,
+		Type:  ImperialRelatedHoliday,
 		Name:  "皇太子徳仁親王の結婚の儀",
 		Month: 6,
 		Day:   9,
@@ -194,7 +194,7 @@ var AllDefs = []Definition{
 		Begin: 1948,
 		Func: func(def Definition, year int) Date {
 			day := 0.24204*float64(year) - math.Floor(float64(year)/4.0) + 39.01
-			return newPublicHoliday(def, year, def.Month, int(day))
+			return newPublicHoliday(def, year, int(day))
 		},
 	},
 	Definition{
@@ -220,7 +220,7 @@ var AllDefs = []Definition{
 		Begin: 1948,
 	},
 	Definition{
-		Type:  ImperialRelated,
+		Type:  ImperialRelatedHoliday,
 		Name:  "即位礼正殿の儀",
 		Month: 11,
 		Day:   12,

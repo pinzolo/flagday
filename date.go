@@ -1,6 +1,8 @@
 package flagday
 
-import "time"
+import (
+	"time"
+)
 
 var jstLocation *time.Location
 
@@ -56,37 +58,28 @@ func (d Date) Time() time.Time {
 	return d.time
 }
 
-func newPublicHoliday(def Definition, year, month, day int) Date {
+// NewDate returns new date with time.
+func NewDate(year, month, day int, name string, kind HolidayKind) Date {
 	return Date{
 		year:  year,
 		month: month,
 		day:   day,
-		name:  def.Name,
-		kind:  PublicHoliday,
+		name:  name,
+		kind:  kind,
 		time:  getTime(year, month, day),
 	}
+}
+
+func newPublicHoliday(def Definition, year, day int) Date {
+	return NewDate(year, def.Month, day, def.Name, PublicHoliday)
 }
 
 func newNationalHoliday(year, month, day int) Date {
-	return Date{
-		year:  year,
-		month: month,
-		day:   day,
-		name:  "国民の休日",
-		kind:  NationalHoliday,
-		time:  getTime(year, month, day),
-	}
+	return NewDate(year, month, day, "国民の休日", NationalHoliday)
 }
 
 func newSubstituteHoliday(year, month, day int) Date {
-	return Date{
-		year:  year,
-		month: month,
-		day:   day,
-		name:  "振替休日",
-		kind:  SubstituteHoliday,
-		time:  getTime(year, month, day),
-	}
+	return NewDate(year, month, day, "振替休日", SubstituteHoliday)
 }
 
 func jst() *time.Location {

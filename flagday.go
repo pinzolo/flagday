@@ -100,7 +100,7 @@ func ClearCache() {
 
 func publicHoliday(def Definition, year int) (Date, error) {
 	switch def.Type {
-	case FixedDay, ImperialRelated:
+	case FixedDay, ImperialRelatedHoliday:
 		return fixedPublicHoliday(def, year), nil
 	case HappyMonday:
 		return happyMonday(def, year), nil
@@ -115,7 +115,7 @@ func publicHoliday(def Definition, year int) (Date, error) {
 }
 
 func fixedPublicHoliday(def Definition, year int) Date {
-	return newPublicHoliday(def, year, def.Month, def.Day)
+	return newPublicHoliday(def, year, def.Day)
 }
 
 func happyMonday(def Definition, year int) Date {
@@ -127,7 +127,7 @@ func happyMonday(def Definition, year int) Date {
 		days = def.WeekNum*7 - int(fday.Weekday()) + int(time.Monday)
 	}
 	tm := fday.AddDate(0, 0, days)
-	return newPublicHoliday(def, year, def.Month, tm.Day())
+	return newPublicHoliday(def, year, tm.Day())
 }
 
 func firstDate(year int, month int) time.Time {
