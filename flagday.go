@@ -46,11 +46,11 @@ func PublicHolidays(defs []Definition, year int) []Date {
 		// natinal holiday
 		if len(dates) > 0 {
 			if !date.Time().Before(NationalHolidayStartDate) {
-				prev := date.Time().AddDate(0, 0, -2)
-				last := dates[len(dates)-1]
-				if last.Time().Equal(prev) && last.Kind() == PublicHoliday {
-					ndate := date.Time().AddDate(0, 0, -1)
-					dates = append(dates, newNationalHoliday(year, int(ndate.Month()), ndate.Day()))
+				if last := dates[len(dates)-1]; last.Kind() == PublicHoliday {
+					if prev := date.Time().AddDate(0, 0, -2); last.Time().Equal(prev) {
+						ndate := date.Time().AddDate(0, 0, -1)
+						dates = append(dates, newNationalHoliday(year, int(ndate.Month()), ndate.Day()))
+					}
 				}
 			}
 		}
