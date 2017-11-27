@@ -22,12 +22,18 @@ const (
 
 // Date public holiday information.
 type Date struct {
+	def   *Definition
 	year  int
 	month int
 	day   int
 	name  string
 	kind  HolidayKind
 	time  time.Time
+}
+
+// Def returns definition of date.
+func (d Date) Def() *Definition {
+	return d.def
 }
 
 // Year of holiday
@@ -61,8 +67,9 @@ func (d Date) Time() time.Time {
 }
 
 // NewDate returns new date with time.
-func NewDate(year, month, day int, name string, kind HolidayKind) Date {
+func NewDate(def *Definition, year, month, day int, name string, kind HolidayKind) Date {
 	return Date{
+		def:   def,
 		year:  year,
 		month: month,
 		day:   day,
@@ -73,19 +80,19 @@ func NewDate(year, month, day int, name string, kind HolidayKind) Date {
 }
 
 func newPublicHoliday(def Definition, year, day int) Date {
-	return NewDate(year, def.Month(), day, def.Name(), PublicHoliday)
+	return NewDate(&def, year, def.Month(), day, def.Name(), PublicHoliday)
 }
 
 func newNationalHoliday(year, month, day int) Date {
-	return NewDate(year, month, day, "国民の休日", NationalHoliday)
+	return NewDate(nil, year, month, day, "国民の休日", NationalHoliday)
 }
 
 func newSubstituteHoliday(year, month, day int) Date {
-	return NewDate(year, month, day, "振替休日", SubstituteHoliday)
+	return NewDate(nil, year, month, day, "振替休日", SubstituteHoliday)
 }
 
 func newImperialRelatedHoliday(def Definition, year, day int) Date {
-	return NewDate(year, def.Month(), day, def.Name(), ImperialRelated)
+	return NewDate(&def, year, def.Month(), day, def.Name(), ImperialRelated)
 }
 
 func jst() *time.Location {
