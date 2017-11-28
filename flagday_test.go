@@ -10,6 +10,28 @@ type expected struct {
 	name  string
 }
 
+func BenchmarkInYear(b *testing.B) {
+	begin := 1948
+	end := 2017
+	ClearCache()
+	for i := 0; i < b.N; i++ {
+		for j := begin; j <= end; j++ {
+			InYear(j)
+		}
+	}
+}
+
+func BenchmarkInYearWithoutCache(b *testing.B) {
+	begin := 1948
+	end := 2017
+	for i := 0; i < b.N; i++ {
+		ClearCache()
+		for j := begin; j <= end; j++ {
+			InYear(j)
+		}
+	}
+}
+
 func check(t *testing.T, year int, dates []Date, testdata []expected) {
 	for i, td := range testdata {
 		date := dates[i]
