@@ -75,3 +75,15 @@ func TestCustomHoliday(t *testing.T) {
 	}
 	check(t, year, dates, testdata)
 }
+
+func TestNoFuncDefinition(t *testing.T) {
+	def := customDef{
+		month:   1,
+		weekNum: 2,
+	}
+	defs := []Definition{def}
+	dates := PublicHolidays(defs, 2017)
+	if len(dates) != 0 {
+		t.Error("should return date when given no func definition")
+	}
+}
