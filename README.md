@@ -12,10 +12,11 @@ flagday is library for public holidays in Japan.
 
 ## Specification
 
-* It is in compliance with the law concerning national holidays.
+* It is in compliance with [the law concerning national holidays](http://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0500/detail?lawId=323AC1000000178&openerCode=1).
 * Compatible holidays after 20th July 1948.
 * flagday does not use data file, basically it can be used without updating except for the following conditions.
     * Increase and decrease of holidays and migration due to revision of law
+    * Equinox days in the distant future (after 2100)
     * Deviation of equinox due to crustal deformation
     * Holidays of Imperial related condolences and auspicious event
 
