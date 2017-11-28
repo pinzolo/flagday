@@ -133,10 +133,11 @@ var AllDefs = []Definition{
 		name:    "春分の日",
 		month:   3,
 		fn: func(def Definition, year int) Date {
-			day := 0.24242*float64(year) - math.Floor(float64(year)/4.0) + 35.84
+			day := 21.4471 + (0.242377 * float64(year-1900)) - math.Floor(float64(year-1900)/4.0)
 			return newPublicHoliday(def, year, int(day))
 		},
 		begin: 1949,
+		end:   2099,
 	},
 	definition{
 		defType: ImperialRelatedHoliday,
@@ -252,11 +253,12 @@ var AllDefs = []Definition{
 		defType: EquinoxDay,
 		name:    "秋分の日",
 		month:   9,
-		begin:   1948,
 		fn: func(def Definition, year int) Date {
-			day := 0.24204*float64(year) - math.Floor(float64(year)/4.0) + 39.01
+			day := 23.8896 + (0.242032 * float64(year-1900)) - math.Floor(float64(year-1900)/4.0)
 			return newPublicHoliday(def, year, int(day))
 		},
+		begin: 1948,
+		end:   2099,
 	},
 	definition{
 		defType: FixedDay,
