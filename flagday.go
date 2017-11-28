@@ -103,7 +103,7 @@ func FixedDateHoliday(def Definition, year int) Date {
 	return newPublicHoliday(def, year, def.Day())
 }
 
-// WeekNumHolidayFunc retuns function for getting nth weekday holiday.
+// WeekNumHolidayFunc returns function for getting nth weekday holiday.
 func WeekNumHolidayFunc(weekday time.Weekday) func(def Definition, year int) Date {
 	return func(def Definition, year int) Date {
 		fday := firstDate(year, def.Month())
