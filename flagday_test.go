@@ -115,7 +115,7 @@ func TestPublicHolidayOf(t *testing.T) {
 		t.Error(err)
 	}
 	checkDate(t, 2017, d, expected{11, 23, "勤労感謝の日"})
-	d, err = PublicHolidayOf(2017, 11, 24)
+	_, err = PublicHolidayOf(2017, 11, 24)
 	if err == nil {
 		t.Errorf("2017/11/24 is not public holiday, PublicHolidayOf should return error")
 	}
@@ -136,7 +136,7 @@ func TestPublicHolidayTimeOf(t *testing.T) {
 		t.Error(err)
 	}
 	checkDate(t, 2017, d, expected{11, 23, "勤労感謝の日"})
-	d, err = PublicHolidayTimeOf(getTime(2017, 11, 24))
+	_, err = PublicHolidayTimeOf(getTime(2017, 11, 24))
 	if err == nil {
 		t.Errorf("2017/11/24 is not public holiday, PublicHolidayOf should return error")
 	}
