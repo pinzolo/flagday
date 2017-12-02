@@ -58,7 +58,7 @@ func TestCustomHoliday(t *testing.T) {
 		defs[i] = def
 	}
 	year := 2017
-	dates := PublicHolidays(defs, year)
+	dates := Holidays(defs, year)
 	testdata := []expected{
 		{1, 14, "Second Saturday"},
 		{2, 11, "Second Saturday"},
@@ -82,7 +82,7 @@ func TestNoFuncDefinition(t *testing.T) {
 		weekNum: 2,
 	}
 	defs := []Definition{def}
-	dates := PublicHolidays(defs, 2017)
+	dates := Holidays(defs, 2017)
 	if len(dates) != 0 {
 		t.Error("should return date when given no func definition")
 	}

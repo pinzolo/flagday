@@ -14,7 +14,7 @@ func InYear(year int) []Holiday {
 		return dates
 	}
 	defs := DefsInYear(year)
-	dates := PublicHolidays(defs, year)
+	dates := Holidays(defs, year)
 	sort.Slice(dates, func(i, j int) bool {
 		return dates[i].Time().Unix() < dates[j].Time().Unix()
 	})
@@ -34,8 +34,8 @@ func InMonth(year, month int) []Holiday {
 	return mdates
 }
 
-// PublicHolidays for given definitions in given year.
-func PublicHolidays(defs []Definition, year int) []Holiday {
+// Holidays for given definitions in given year.
+func Holidays(defs []Definition, year int) []Holiday {
 	var dates []Holiday
 	for _, def := range defs {
 		if def.Func() == nil {
