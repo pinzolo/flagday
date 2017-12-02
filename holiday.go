@@ -20,8 +20,8 @@ const (
 	ImperialRelated
 )
 
-// Date public holiday information.
-type Date struct {
+// Holiday holds public holiday information.
+type Holiday struct {
 	def   *Definition
 	year  int
 	month int
@@ -32,43 +32,43 @@ type Date struct {
 }
 
 // Def returns definition of date.
-func (d Date) Def() *Definition {
+func (d Holiday) Def() *Definition {
 	return d.def
 }
 
 // Year of holiday
-func (d Date) Year() int {
+func (d Holiday) Year() int {
 	return d.year
 }
 
 // Month of holiday
-func (d Date) Month() int {
+func (d Holiday) Month() int {
 	return d.month
 }
 
 // Day of holiday
-func (d Date) Day() int {
+func (d Holiday) Day() int {
 	return d.day
 }
 
 // Name of holiday
-func (d Date) Name() string {
+func (d Holiday) Name() string {
 	return d.name
 }
 
 // Kind of holiday
-func (d Date) Kind() HolidayKind {
+func (d Holiday) Kind() HolidayKind {
 	return d.kind
 }
 
 // Time returns time.Time converted in JST.
-func (d Date) Time() time.Time {
+func (d Holiday) Time() time.Time {
 	return d.time
 }
 
 // NewDate returns new date with time.
-func NewDate(def *Definition, year, month, day int, name string, kind HolidayKind) Date {
-	return Date{
+func NewDate(def *Definition, year, month, day int, name string, kind HolidayKind) Holiday {
+	return Holiday{
 		def:   def,
 		year:  year,
 		month: month,
@@ -79,19 +79,19 @@ func NewDate(def *Definition, year, month, day int, name string, kind HolidayKin
 	}
 }
 
-func newPublicHoliday(def Definition, year, day int) Date {
+func newPublicHoliday(def Definition, year, day int) Holiday {
 	return NewDate(&def, year, def.Month(), day, def.Name(), PublicHoliday)
 }
 
-func newNationalHoliday(year, month, day int) Date {
+func newNationalHoliday(year, month, day int) Holiday {
 	return NewDate(nil, year, month, day, "国民の休日", NationalHoliday)
 }
 
-func newSubstituteHoliday(year, month, day int) Date {
+func newSubstituteHoliday(year, month, day int) Holiday {
 	return NewDate(nil, year, month, day, "振替休日", SubstituteHoliday)
 }
 
-func newImperialRelatedHoliday(def Definition, year, day int) Date {
+func newImperialRelatedHoliday(def Definition, year, day int) Holiday {
 	return NewDate(&def, year, def.Month(), day, def.Name(), ImperialRelated)
 }
 

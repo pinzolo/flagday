@@ -13,10 +13,10 @@ func TestTime(t *testing.T) {
 	d := FixedDateHoliday(def, 2017)
 	tm := d.Time()
 	if d.Def() == nil {
-		t.Error("date should have own definition on public holiday")
+		t.Error("holiday should have own definition on public holiday")
 	}
 	if !isSameDef(*d.Def(), def) {
-		t.Error("date should have same definition")
+		t.Error("holiday should have same definition")
 	}
 	if tm.Year() != d.Year() {
 		t.Errorf("converted time should have %d as year, but got %d", d.Year(), tm.Year())

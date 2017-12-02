@@ -6,10 +6,10 @@ import (
 	"time"
 )
 
-var cache = make(map[int][]Date)
+var cache = make(map[int][]Holiday)
 
 // InYear returns holiadys in given year.
-func InYear(year int) []Date {
+func InYear(year int) []Holiday {
 	if dates, ok := cache[year]; ok {
 		return dates
 	}
@@ -23,9 +23,9 @@ func InYear(year int) []Date {
 }
 
 // InMonth returns holiadys in given year and month.
-func InMonth(year, month int) []Date {
+func InMonth(year, month int) []Holiday {
 	ydates := InYear(year)
-	var mdates []Date
+	var mdates []Holiday
 	for _, d := range ydates {
 		if d.Month() == month {
 			mdates = append(mdates, d)
@@ -35,8 +35,8 @@ func InMonth(year, month int) []Date {
 }
 
 // PublicHolidays for given definitions in given year.
-func PublicHolidays(defs []Definition, year int) []Date {
-	var dates []Date
+func PublicHolidays(defs []Definition, year int) []Holiday {
+	var dates []Holiday
 	for _, def := range defs {
 		if def.Func() == nil {
 			continue
@@ -67,18 +67,18 @@ func PublicHolidays(defs []Definition, year int) []Date {
 }
 
 // PublicHolidayOf returns public holiday information of given date units.
-func PublicHolidayOf(year, month, day int) (Date, error) {
+func PublicHolidayOf(year, month, day int) (Holiday, error) {
 	dates := InYear(year)
 	for _, d := range dates {
 		if d.Month() == month && d.Day() == day {
 			return d, nil
 		}
 	}
-	return Date{}, errors.New("not public holiday")
+	return Holiday{}, errors.New("not public holiday")
 }
 
 // PublicHolidayTimeOf returns public holiday information of given time.
-func PublicHolidayTimeOf(tm time.Time) (Date, error) {
+func PublicHolidayTimeOf(tm time.Time) (Holiday, error) {
 	return PublicHolidayOf(tm.Year(), int(tm.Month()), tm.Day())
 }
 
@@ -95,17 +95,17 @@ func IsPublicHolidayTime(tm time.Time) bool {
 
 // ClearCache clear internal cache.
 func ClearCache() {
-	cache = make(map[int][]Date)
+	cache = make(map[int][]Holiday)
 }
 
 // FixedDateHoliday returns fixed date holiday.
-func FixedDateHoliday(def Definition, year int) Date {
+func FixedDateHoliday(def Definition, year int) Holiday {
 	return newPublicHoliday(def, year, def.Day())
 }
 
 // WeekNumHolidayFunc returns function for getting nth weekday holiday.
-func WeekNumHolidayFunc(weekday time.Weekday) func(def Definition, year int) Date {
-	return func(def Definition, year int) Date {
+func WeekNumHolidayFunc(weekday time.Weekday) func(def Definition, year int) Holiday {
+	return func(def Definition, year int) Holiday {
 		fday := firstDate(year, def.Month())
 		var days int
 		if int(fday.Weekday()) <= int(weekday) {
@@ -119,11 +119,11 @@ func WeekNumHolidayFunc(weekday time.Weekday) func(def Definition, year int) Dat
 	}
 }
 
-func happyMonday(def Definition, year int) Date {
+func happyMonday(def Definition, year int) Holiday {
 	return WeekNumHolidayFunc(time.Monday)(def, year)
 }
 
-func imperialRelatedHoliday(def Definition, year int) Date {
+func imperialRelatedHoliday(def Definition, year int) Holiday {
 	return newImperialRelatedHoliday(def, year, def.Day())
 }
 
@@ -131,12 +131,12 @@ func firstDate(year int, month int) time.Time {
 	return time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)
 }
 
-func substituteHolidayOf(date Date) (Date, error) {
+func substituteHolidayOf(date Holiday) (Holiday, error) {
 	if date.Time().Before(SubstituteHolidayStartDate) {
-		return Date{}, errors.New("before enforcement of law")
+		return Holiday{}, errors.New("before enforcement of law")
 	}
 	if date.Time().Weekday() != time.Sunday {
-		return Date{}, errors.New("not Sunday")
+		return Holiday{}, errors.New("not Sunday")
 	}
 	day := date.Day() + 1
 	// Golden week

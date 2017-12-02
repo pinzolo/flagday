@@ -25,7 +25,7 @@ type Definition interface {
 	Month() int
 	Day() int
 	WeekNum() int
-	Func() func(Definition, int) Date
+	Func() func(Definition, int) Holiday
 	Begin() int
 	End() int
 }
@@ -36,7 +36,7 @@ type definition struct {
 	month   int
 	day     int
 	weekNum int
-	fn      func(def Definition, year int) Date
+	fn      func(def Definition, year int) Holiday
 	begin   int
 	end     int
 }
@@ -61,7 +61,7 @@ func (def definition) WeekNum() int {
 	return def.weekNum
 }
 
-func (def definition) Func() func(def Definition, year int) Date {
+func (def definition) Func() func(def Definition, year int) Holiday {
 	return def.fn
 }
 
@@ -132,7 +132,7 @@ var AllDefs = []Definition{
 		defType: EquinoxDay,
 		name:    "春分の日",
 		month:   3,
-		fn: func(def Definition, year int) Date {
+		fn: func(def Definition, year int) Holiday {
 			day := 21.4471 + (0.242377 * float64(year-1900)) - math.Floor(float64(year-1900)/4.0)
 			return newPublicHoliday(def, year, int(day))
 		},
@@ -253,7 +253,7 @@ var AllDefs = []Definition{
 		defType: EquinoxDay,
 		name:    "秋分の日",
 		month:   9,
-		fn: func(def Definition, year int) Date {
+		fn: func(def Definition, year int) Holiday {
 			day := 23.8896 + (0.242032 * float64(year-1900)) - math.Floor(float64(year-1900)/4.0)
 			return newPublicHoliday(def, year, int(day))
 		},

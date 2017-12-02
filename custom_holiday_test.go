@@ -12,7 +12,7 @@ type customDef struct {
 	name    string
 	month   int
 	weekNum int
-	fn      func(def Definition, year int) Date
+	fn      func(def Definition, year int) Holiday
 }
 
 func (def customDef) Type() DefType {
@@ -35,7 +35,7 @@ func (def customDef) WeekNum() int {
 	return def.weekNum
 }
 
-func (def customDef) Func() func(def Definition, year int) Date {
+func (def customDef) Func() func(def Definition, year int) Holiday {
 	return def.fn
 }
 

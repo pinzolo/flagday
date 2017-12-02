@@ -32,14 +32,14 @@ func BenchmarkInYearWithoutCache(b *testing.B) {
 	}
 }
 
-func check(t *testing.T, year int, dates []Date, testdata []expected) {
+func check(t *testing.T, year int, dates []Holiday, testdata []expected) {
 	for i, td := range testdata {
 		date := dates[i]
 		checkDate(t, year, date, td)
 	}
 }
 
-func checkDate(t *testing.T, year int, date Date, td expected) {
+func checkDate(t *testing.T, year int, date Holiday, td expected) {
 	if date.Year() != year {
 		t.Errorf("year is not match, expected %d but got %d", year, date.Year())
 	}
