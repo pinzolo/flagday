@@ -74,7 +74,7 @@ func PublicHolidayOf(year, month, day int) (Holiday, error) {
 			return d, nil
 		}
 	}
-	return Holiday{}, errors.New("not public holiday")
+	return nil, errors.New("not public holiday")
 }
 
 // PublicHolidayTimeOf returns public holiday information of given time.
@@ -133,10 +133,10 @@ func firstDateOf(year int, month int) time.Time {
 
 func substituteHolidayOf(date Holiday) (Holiday, error) {
 	if date.Time().Before(SubstituteHolidayStartDate) {
-		return Holiday{}, errors.New("before enforcement of law")
+		return nil, errors.New("before enforcement of law")
 	}
 	if date.Time().Weekday() != time.Sunday {
-		return Holiday{}, errors.New("not Sunday")
+		return nil, errors.New("not Sunday")
 	}
 	day := date.Day() + 1
 	// Golden week

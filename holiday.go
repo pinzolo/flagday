@@ -21,7 +21,24 @@ const (
 )
 
 // Holiday holds public holiday information.
-type Holiday struct {
+type Holiday interface {
+	// Def returns definition of holiday.
+	Def() *Definition
+	// Year of holiday
+	Year() int
+	// Month of holiday
+	Month() int
+	// Day of holiday
+	Day() int
+	// Name of holiday
+	Name() string
+	// Kind of holiday
+	Kind() HolidayKind
+	// Time of holiday (JST)
+	Time() time.Time
+}
+
+type holiday struct {
 	def   *Definition
 	year  int
 	month int
@@ -31,44 +48,37 @@ type Holiday struct {
 	time  time.Time
 }
 
-// Def returns definition of date.
-func (d Holiday) Def() *Definition {
+func (d holiday) Def() *Definition {
 	return d.def
 }
 
-// Year of holiday
-func (d Holiday) Year() int {
+func (d holiday) Year() int {
 	return d.year
 }
 
-// Month of holiday
-func (d Holiday) Month() int {
+func (d holiday) Month() int {
 	return d.month
 }
 
-// Day of holiday
-func (d Holiday) Day() int {
+func (d holiday) Day() int {
 	return d.day
 }
 
-// Name of holiday
-func (d Holiday) Name() string {
+func (d holiday) Name() string {
 	return d.name
 }
 
-// Kind of holiday
-func (d Holiday) Kind() HolidayKind {
+func (d holiday) Kind() HolidayKind {
 	return d.kind
 }
 
-// Time returns time.Time converted in JST.
-func (d Holiday) Time() time.Time {
+func (d holiday) Time() time.Time {
 	return d.time
 }
 
 // NewHoliday returns new date with time.
 func NewHoliday(def *Definition, year, month, day int, name string, kind HolidayKind) Holiday {
-	return Holiday{
+	return holiday{
 		def:   def,
 		year:  year,
 		month: month,
