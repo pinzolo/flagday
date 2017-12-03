@@ -106,7 +106,7 @@ func FixedDateHoliday(def Definition, year int) Holiday {
 // WeekNumHolidayFunc returns function for getting nth weekday holiday.
 func WeekNumHolidayFunc(weekday time.Weekday) func(def Definition, year int) Holiday {
 	return func(def Definition, year int) Holiday {
-		fday := firstDate(year, def.Month())
+		fday := firstDateOf(year, def.Month())
 		var days int
 		if int(fday.Weekday()) <= int(weekday) {
 			days = (def.WeekNum()-1)*7 - int(fday.Weekday()) + int(weekday)
@@ -127,7 +127,7 @@ func imperialRelatedHoliday(def Definition, year int) Holiday {
 	return newImperialRelatedHoliday(def, year, def.Day())
 }
 
-func firstDate(year int, month int) time.Time {
+func firstDateOf(year int, month int) time.Time {
 	return time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)
 }
 

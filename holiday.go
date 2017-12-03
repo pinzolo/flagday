@@ -66,8 +66,8 @@ func (d Holiday) Time() time.Time {
 	return d.time
 }
 
-// NewDate returns new date with time.
-func NewDate(def *Definition, year, month, day int, name string, kind HolidayKind) Holiday {
+// NewHoliday returns new date with time.
+func NewHoliday(def *Definition, year, month, day int, name string, kind HolidayKind) Holiday {
 	return Holiday{
 		def:   def,
 		year:  year,
@@ -75,24 +75,24 @@ func NewDate(def *Definition, year, month, day int, name string, kind HolidayKin
 		day:   day,
 		name:  name,
 		kind:  kind,
-		time:  getTime(year, month, day),
+		time:  timeFrom(year, month, day),
 	}
 }
 
 func newPublicHoliday(def Definition, year, day int) Holiday {
-	return NewDate(&def, year, def.Month(), day, def.Name(), PublicHoliday)
+	return NewHoliday(&def, year, def.Month(), day, def.Name(), PublicHoliday)
 }
 
 func newNationalHoliday(year, month, day int) Holiday {
-	return NewDate(nil, year, month, day, "国民の休日", NationalHoliday)
+	return NewHoliday(nil, year, month, day, "国民の休日", NationalHoliday)
 }
 
 func newSubstituteHoliday(year, month, day int) Holiday {
-	return NewDate(nil, year, month, day, "振替休日", SubstituteHoliday)
+	return NewHoliday(nil, year, month, day, "振替休日", SubstituteHoliday)
 }
 
 func newImperialRelatedHoliday(def Definition, year, day int) Holiday {
-	return NewDate(&def, year, def.Month(), day, def.Name(), ImperialRelated)
+	return NewHoliday(&def, year, def.Month(), day, def.Name(), ImperialRelated)
 }
 
 func jst() *time.Location {
@@ -106,6 +106,6 @@ func jst() *time.Location {
 	return jstLocation
 }
 
-func getTime(year, month, day int) time.Time {
+func timeFrom(year, month, day int) time.Time {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, jst())
 }

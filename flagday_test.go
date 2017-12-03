@@ -131,22 +131,22 @@ func TestIsPublicHoliday(t *testing.T) {
 }
 
 func TestPublicHolidayTimeOf(t *testing.T) {
-	d, err := PublicHolidayTimeOf(getTime(2017, 11, 23))
+	d, err := PublicHolidayTimeOf(timeFrom(2017, 11, 23))
 	if err != nil {
 		t.Error(err)
 	}
 	checkDate(t, 2017, d, expected{11, 23, "勤労感謝の日"})
-	_, err = PublicHolidayTimeOf(getTime(2017, 11, 24))
+	_, err = PublicHolidayTimeOf(timeFrom(2017, 11, 24))
 	if err == nil {
 		t.Errorf("2017/11/24 is not public holiday, PublicHolidayOf should return error")
 	}
 }
 
 func TestIsPublicHolidayTime(t *testing.T) {
-	if !IsPublicHolidayTime(getTime(2017, 11, 23)) {
+	if !IsPublicHolidayTime(timeFrom(2017, 11, 23)) {
 		t.Errorf("2017/11/23 is public holiday, but IsPublicHoliday returns false")
 	}
-	if IsPublicHolidayTime(getTime(2017, 11, 24)) {
+	if IsPublicHolidayTime(timeFrom(2017, 11, 24)) {
 		t.Errorf("2017/11/24 is public holiday, but IsPublicHoliday returns true")
 	}
 }
