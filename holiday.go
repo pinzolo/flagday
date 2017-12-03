@@ -24,17 +24,17 @@ const (
 type Holiday interface {
 	// Def returns definition of holiday.
 	Def() *Definition
-	// Year of holiday
+	// Year of holiday.
 	Year() int
-	// Month of holiday
+	// Month of holiday.
 	Month() int
-	// Day of holiday
+	// Day of holiday.
 	Day() int
-	// Name of holiday
+	// Name of holiday.
 	Name() string
-	// Kind of holiday
+	// Kind of holiday.
 	Kind() HolidayKind
-	// Time of holiday (JST)
+	// Time is time.Time instance of holiday (JST)
 	Time() time.Time
 }
 

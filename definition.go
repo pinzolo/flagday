@@ -20,13 +20,21 @@ const (
 
 // Definition is definition of public holiday in Japan.
 type Definition interface {
+	// Type of definition.
 	Type() DefType
+	// Name of holiday.
 	Name() string
+	// Month of holiday.
 	Month() int
+	// Day of holiday.
 	Day() int
+	// WeekNum of holiday.
 	WeekNum() int
+	// Func for getting holiday in given year from definition.
 	Func() func(Definition, int) Holiday
+	// Begin year of definition.
 	Begin() int
+	// End year of definition.
 	End() int
 }
 

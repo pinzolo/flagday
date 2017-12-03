@@ -36,40 +36,40 @@ func InMonth(year, month int) []Holiday {
 
 // Holidays for given definitions in given year.
 func Holidays(defs []Definition, year int) []Holiday {
-	var dates []Holiday
+	var holidays []Holiday
 	for _, def := range defs {
 		if def.Func() == nil {
 			continue
 		}
-		date := def.Func()(def, year)
+		holiday := def.Func()(def, year)
 
 		// natinal holiday
-		if len(dates) > 0 {
-			if !date.Time().Before(NationalHolidayStartDate) {
-				if last := dates[len(dates)-1]; last.Kind() == PublicHoliday {
-					if prev := date.Time().AddDate(0, 0, -2); last.Time().Equal(prev) {
-						ndate := date.Time().AddDate(0, 0, -1)
-						dates = append(dates, newNationalHoliday(year, int(ndate.Month()), ndate.Day()))
+		if len(holidays) > 0 {
+			if !holiday.Time().Before(NationalHolidayStartDate) {
+				if last := holidays[len(holidays)-1]; last.Kind() == PublicHoliday {
+					if prev := holiday.Time().AddDate(0, 0, -2); last.Time().Equal(prev) {
+						ndate := holiday.Time().AddDate(0, 0, -1)
+						holidays = append(holidays, newNationalHoliday(year, int(ndate.Month()), ndate.Day()))
 					}
 				}
 			}
 		}
 
-		dates = append(dates, date)
+		holidays = append(holidays, holiday)
 
 		// Substitute holiday
-		substDate, err := substituteHolidayOf(date)
+		substDate, err := substituteHolidayOf(holiday)
 		if err == nil {
-			dates = append(dates, substDate)
+			holidays = append(holidays, substDate)
 		}
 	}
-	return dates
+	return holidays
 }
 
 // PublicHolidayOf returns public holiday information of given date units.
 func PublicHolidayOf(year, month, day int) (Holiday, error) {
-	dates := InYear(year)
-	for _, d := range dates {
+	holidays := InYear(year)
+	for _, d := range holidays {
 		if d.Month() == month && d.Day() == day {
 			return d, nil
 		}
@@ -131,17 +131,17 @@ func firstDateOf(year int, month int) time.Time {
 	return time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)
 }
 
-func substituteHolidayOf(date Holiday) (Holiday, error) {
-	if date.Time().Before(SubstituteHolidayStartDate) {
+func substituteHolidayOf(holiday Holiday) (Holiday, error) {
+	if holiday.Time().Before(SubstituteHolidayStartDate) {
 		return nil, errors.New("before enforcement of law")
 	}
-	if date.Time().Weekday() != time.Sunday {
+	if holiday.Time().Weekday() != time.Sunday {
 		return nil, errors.New("not Sunday")
 	}
-	day := date.Day() + 1
+	day := holiday.Day() + 1
 	// Golden week
-	if date.Month() == 5 && (date.Day() == 3 || date.Day() == 4) {
+	if holiday.Month() == 5 && (holiday.Day() == 3 || holiday.Day() == 4) {
 		day = 6
 	}
-	return newSubstituteHoliday(date.Year(), date.Month(), day), nil
+	return newSubstituteHoliday(holiday.Year(), holiday.Month(), day), nil
 }
