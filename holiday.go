@@ -1,10 +1,14 @@
 package flagday
 
 import (
+	"sync"
 	"time"
 )
 
-var jstLocation *time.Location
+var (
+	jstLocation *time.Location
+	jstOnce     sync.Once
+)
 
 // HolidayKind is kind of holiday.
 type HolidayKind int
@@ -106,13 +110,13 @@ func newImperialRelatedHoliday(def Definition, year, day int) Holiday {
 }
 
 func jst() *time.Location {
-	if jstLocation == nil {
+	jstOnce.Do(func() {
 		loc, err := time.LoadLocation("Asia/Tokyo")
 		if err != nil {
 			loc = time.FixedZone("Asia/Tokyo", 9*60*60)
 		}
 		jstLocation = loc
-	}
+	})
 	return jstLocation
 }
 
