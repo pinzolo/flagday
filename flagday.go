@@ -43,7 +43,7 @@ func Holidays(defs []Definition, year int) []Holiday {
 		}
 		holiday := def.Func()(def, year)
 
-		// natinal holiday
+		// national holiday
 		if len(holidays) > 0 {
 			if !holiday.Time().Before(NationalHolidayStartDate) {
 				if last := holidays[len(holidays)-1]; last.Kind() == PublicHoliday {
