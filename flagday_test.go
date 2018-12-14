@@ -161,15 +161,39 @@ func TestIn2020(t *testing.T) {
 		{5, 4, "みどりの日", PublicHoliday},
 		{5, 5, "こどもの日", PublicHoliday},
 		{5, 6, "振替休日", SubstituteHoliday},
-		{7, 20, "海の日", PublicHoliday},
-		{8, 11, "山の日", PublicHoliday},
+		{7, 23, "海の日", PublicHoliday},
+		{7, 24, "スポーツの日", PublicHoliday},
+		{8, 10, "山の日", PublicHoliday},
 		{9, 21, "敬老の日", PublicHoliday},
 		{9, 22, "秋分の日", PublicHoliday},
-		{10, 12, "体育の日", PublicHoliday},
 		{11, 3, "文化の日", PublicHoliday},
 		{11, 23, "勤労感謝の日", PublicHoliday},
 	}
 	year := 2020
+	dates := InYear(year)
+	check(t, year, dates, testdata)
+}
+
+func TestIn2021(t *testing.T) {
+	testdata := []expected{
+		{1, 1, "元日", PublicHoliday},
+		{1, 11, "成人の日", PublicHoliday},
+		{2, 11, "建国記念の日", PublicHoliday},
+		{2, 23, "天皇誕生日", PublicHoliday},
+		{3, 20, "春分の日", PublicHoliday},
+		{4, 29, "昭和の日", PublicHoliday},
+		{5, 3, "憲法記念日", PublicHoliday},
+		{5, 4, "みどりの日", PublicHoliday},
+		{5, 5, "こどもの日", PublicHoliday},
+		{7, 19, "海の日", PublicHoliday},
+		{8, 11, "山の日", PublicHoliday},
+		{9, 20, "敬老の日", PublicHoliday},
+		{9, 23, "秋分の日", PublicHoliday},
+		{10, 11, "スポーツの日", PublicHoliday},
+		{11, 3, "文化の日", PublicHoliday},
+		{11, 23, "勤労感謝の日", PublicHoliday},
+	}
+	year := 2021
 	dates := InYear(year)
 	check(t, year, dates, testdata)
 }
