@@ -128,6 +128,14 @@ var AllDefs = []Definition{
 		begin:   1967,
 	},
 	definition{
+		defType: FixedDay,
+		name:    "天皇誕生日",
+		month:   2,
+		day:     23,
+		fn:      FixedDateHoliday,
+		begin:   2020,
+	},
+	definition{
 		defType: ImperialRelatedHoliday,
 		name:    "昭和天皇の大喪の礼",
 		month:   2,
@@ -181,6 +189,15 @@ var AllDefs = []Definition{
 		day:     29,
 		fn:      FixedDateHoliday,
 		begin:   2007,
+	},
+	definition{
+		defType: ImperialRelatedHoliday,
+		name:    "即位の礼",
+		month:   5,
+		day:     1,
+		fn:      imperialRelatedHoliday,
+		begin:   2019,
+		end:     2019,
 	},
 	definition{
 		defType: FixedDay,
@@ -286,6 +303,15 @@ var AllDefs = []Definition{
 		begin:   2000,
 	},
 	definition{
+		defType: ImperialRelatedHoliday,
+		name:    "即位礼正殿の儀",
+		month:   10,
+		day:     22,
+		fn:      imperialRelatedHoliday,
+		begin:   2019,
+		end:     2019,
+	},
+	definition{
 		defType: FixedDay,
 		name:    "文化の日",
 		month:   11,
@@ -317,5 +343,6 @@ var AllDefs = []Definition{
 		day:     23,
 		fn:      FixedDateHoliday,
 		begin:   1989,
+		end:     2018,
 	},
 }

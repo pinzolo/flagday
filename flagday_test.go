@@ -8,6 +8,7 @@ type expected struct {
 	month int
 	day   int
 	name  string
+	kind  HolidayKind
 }
 
 func BenchmarkInYear(b *testing.B) {
@@ -33,6 +34,11 @@ func BenchmarkInYearWithoutCache(b *testing.B) {
 }
 
 func check(t *testing.T, year int, dates []Holiday, testdata []expected) {
+	t.Helper()
+	if len(testdata) != len(dates) {
+		t.Errorf("holiday count is not match, expected %d but got %d", len(testdata), len(dates))
+		return
+	}
 	for i, td := range testdata {
 		date := dates[i]
 		checkDate(t, year, date, td)
@@ -40,64 +46,139 @@ func check(t *testing.T, year int, dates []Holiday, testdata []expected) {
 }
 
 func checkDate(t *testing.T, year int, date Holiday, td expected) {
+	t.Helper()
+	s := date.Time().Format("2006/1/2")
 	if date.Year() != year {
-		t.Errorf("year is not match, expected %d but got %d", year, date.Year())
+		t.Errorf("year of %s is not match, expected %d but got %d", s, year, date.Year())
 	}
 	if date.Month() != td.month {
-		t.Errorf("month is not match, expected %d but got %d", td.month, date.Month())
+		t.Errorf("month of %s is not match, expected %d but got %d", s, td.month, date.Month())
 	}
 	if date.Day() != td.day {
-		t.Errorf("day is not match, expected %d/%d but got %d/%d", td.month, td.day, date.Month(), date.Day())
+		t.Errorf("day is of %s not match, expected %d/%d but got %d/%d", s, td.month, td.day, date.Month(), date.Day())
 	}
 	if date.Name() != td.name {
-		t.Errorf("holiday name is not match, expected %s but got %s", td.name, date.Name())
+		t.Errorf("holiday name of %s is not match, expected %s but got %s", s, td.name, date.Name())
 	}
-	if td.name == "振替休日" {
-		if date.Kind() != SubstituteHoliday {
-			t.Errorf("kind mismatch, expected %v but got %v", SubstituteHoliday, date.Kind())
-		}
-	} else if td.name == "国民の休日" {
-		if date.Kind() != NationalHoliday {
-			t.Errorf("kind mismatch, expected %v but got %v", NationalHoliday, date.Kind())
-		}
-	} else {
-		if date.Kind() != PublicHoliday {
-			t.Errorf("kind mismatch, expected %v but got %v", PublicHoliday, date.Kind())
-		}
+	if date.Kind() != td.kind {
+		t.Errorf("kind of %s is not match, expected %v but got %v", s, td.kind, date.Kind())
 	}
-
 }
 
 func TestInYear(t *testing.T) {
 	testdata := []expected{
-		{1, 1, "元日"},
-		{1, 2, "振替休日"},
-		{1, 9, "成人の日"},
-		{2, 11, "建国記念の日"},
-		{3, 20, "春分の日"},
-		{4, 29, "昭和の日"},
-		{5, 3, "憲法記念日"},
-		{5, 4, "みどりの日"},
-		{5, 5, "こどもの日"},
-		{7, 17, "海の日"},
-		{8, 11, "山の日"},
-		{9, 18, "敬老の日"},
-		{9, 23, "秋分の日"},
-		{10, 9, "体育の日"},
-		{11, 03, "文化の日"},
-		{11, 23, "勤労感謝の日"},
-		{12, 23, "天皇誕生日"},
+		{1, 1, "元日", PublicHoliday},
+		{1, 2, "振替休日", SubstituteHoliday},
+		{1, 9, "成人の日", PublicHoliday},
+		{2, 11, "建国記念の日", PublicHoliday},
+		{3, 20, "春分の日", PublicHoliday},
+		{4, 29, "昭和の日", PublicHoliday},
+		{5, 3, "憲法記念日", PublicHoliday},
+		{5, 4, "みどりの日", PublicHoliday},
+		{5, 5, "こどもの日", PublicHoliday},
+		{7, 17, "海の日", PublicHoliday},
+		{8, 11, "山の日", PublicHoliday},
+		{9, 18, "敬老の日", PublicHoliday},
+		{9, 23, "秋分の日", PublicHoliday},
+		{10, 9, "体育の日", PublicHoliday},
+		{11, 3, "文化の日", PublicHoliday},
+		{11, 23, "勤労感謝の日", PublicHoliday},
+		{12, 23, "天皇誕生日", PublicHoliday},
 	}
 	year := 2017
 	dates := InYear(year)
 	check(t, year, dates, testdata)
 }
 
+func TestIn2018(t *testing.T) {
+	testdata := []expected{
+		{1, 1, "元日", PublicHoliday},
+		{1, 8, "成人の日", PublicHoliday},
+		{2, 11, "建国記念の日", PublicHoliday},
+		{2, 12, "振替休日", SubstituteHoliday},
+		{3, 21, "春分の日", PublicHoliday},
+		{4, 29, "昭和の日", PublicHoliday},
+		{4, 30, "振替休日", SubstituteHoliday},
+		{5, 3, "憲法記念日", PublicHoliday},
+		{5, 4, "みどりの日", PublicHoliday},
+		{5, 5, "こどもの日", PublicHoliday},
+		{7, 16, "海の日", PublicHoliday},
+		{8, 11, "山の日", PublicHoliday},
+		{9, 17, "敬老の日", PublicHoliday},
+		{9, 23, "秋分の日", PublicHoliday},
+		{9, 24, "振替休日", SubstituteHoliday},
+		{10, 8, "体育の日", PublicHoliday},
+		{11, 3, "文化の日", PublicHoliday},
+		{11, 23, "勤労感謝の日", PublicHoliday},
+		{12, 23, "天皇誕生日", PublicHoliday},
+		{12, 24, "振替休日", SubstituteHoliday},
+	}
+	year := 2018
+	dates := InYear(year)
+	check(t, year, dates, testdata)
+}
+
+func TestIn2019(t *testing.T) {
+	testdata := []expected{
+		{1, 1, "元日", PublicHoliday},
+		{1, 14, "成人の日", PublicHoliday},
+		{2, 11, "建国記念の日", PublicHoliday},
+		{3, 21, "春分の日", PublicHoliday},
+		{4, 29, "昭和の日", PublicHoliday},
+		{4, 30, "国民の休日", NationalHoliday},
+		{5, 1, "即位の礼", ImperialRelated},
+		{5, 2, "国民の休日", NationalHoliday},
+		{5, 3, "憲法記念日", PublicHoliday},
+		{5, 4, "みどりの日", PublicHoliday},
+		{5, 5, "こどもの日", PublicHoliday},
+		{5, 6, "振替休日", SubstituteHoliday},
+		{7, 15, "海の日", PublicHoliday},
+		{8, 11, "山の日", PublicHoliday},
+		{8, 12, "振替休日", SubstituteHoliday},
+		{9, 16, "敬老の日", PublicHoliday},
+		{9, 23, "秋分の日", PublicHoliday},
+		{10, 14, "体育の日", PublicHoliday},
+		{10, 22, "即位礼正殿の儀", ImperialRelated},
+		{11, 3, "文化の日", PublicHoliday},
+		{11, 4, "振替休日", SubstituteHoliday},
+		{11, 23, "勤労感謝の日", PublicHoliday},
+	}
+	year := 2019
+	dates := InYear(year)
+	check(t, year, dates, testdata)
+}
+
+func TestIn2020(t *testing.T) {
+	testdata := []expected{
+		{1, 1, "元日", PublicHoliday},
+		{1, 13, "成人の日", PublicHoliday},
+		{2, 11, "建国記念の日", PublicHoliday},
+		{2, 23, "天皇誕生日", PublicHoliday},
+		{2, 24, "振替休日", SubstituteHoliday},
+		{3, 20, "春分の日", PublicHoliday},
+		{4, 29, "昭和の日", PublicHoliday},
+		{5, 3, "憲法記念日", PublicHoliday},
+		{5, 4, "みどりの日", PublicHoliday},
+		{5, 5, "こどもの日", PublicHoliday},
+		{5, 6, "振替休日", SubstituteHoliday},
+		{7, 20, "海の日", PublicHoliday},
+		{8, 11, "山の日", PublicHoliday},
+		{9, 21, "敬老の日", PublicHoliday},
+		{9, 22, "秋分の日", PublicHoliday},
+		{10, 12, "体育の日", PublicHoliday},
+		{11, 3, "文化の日", PublicHoliday},
+		{11, 23, "勤労感謝の日", PublicHoliday},
+	}
+	year := 2020
+	dates := InYear(year)
+	check(t, year, dates, testdata)
+}
+
 func TestInMonth(t *testing.T) {
 	testdata := []expected{
-		{1, 1, "元日"},
-		{1, 2, "振替休日"},
-		{1, 9, "成人の日"},
+		{1, 1, "元日", PublicHoliday},
+		{1, 2, "振替休日", SubstituteHoliday},
+		{1, 9, "成人の日", PublicHoliday},
 	}
 	year := 2017
 	dates := InMonth(year, 1)
@@ -114,7 +195,7 @@ func TestPublicHolidayOf(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	checkDate(t, 2017, d, expected{11, 23, "勤労感謝の日"})
+	checkDate(t, 2017, d, expected{11, 23, "勤労感謝の日", PublicHoliday})
 	_, err = PublicHolidayOf(2017, 11, 24)
 	if err == nil {
 		t.Errorf("2017/11/24 is not public holiday, PublicHolidayOf should return error")
@@ -135,7 +216,7 @@ func TestPublicHolidayTimeOf(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	checkDate(t, 2017, d, expected{11, 23, "勤労感謝の日"})
+	checkDate(t, 2017, d, expected{11, 23, "勤労感謝の日", PublicHoliday})
 	_, err = PublicHolidayTimeOf(timeFrom(2017, 11, 24))
 	if err == nil {
 		t.Errorf("2017/11/24 is not public holiday, PublicHolidayOf should return error")
@@ -159,5 +240,11 @@ func TestClearCache(t *testing.T) {
 	ClearCache()
 	if len(cache) != 0 {
 		t.Error("cache length should be zero after ClearCache called")
+	}
+}
+
+func logDates(t *testing.T, dates []Holiday) {
+	for _, d := range dates {
+		t.Logf("%s %s", d.Time().Format("2006/01/02"), d.Name())
 	}
 }

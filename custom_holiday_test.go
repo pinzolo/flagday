@@ -60,18 +60,18 @@ func TestCustomHoliday(t *testing.T) {
 	year := 2017
 	dates := Holidays(defs, year)
 	testdata := []expected{
-		{1, 14, "Second Saturday"},
-		{2, 11, "Second Saturday"},
-		{3, 11, "Second Saturday"},
-		{4, 8, "Second Saturday"},
-		{5, 13, "Second Saturday"},
-		{6, 10, "Second Saturday"},
-		{7, 8, "Second Saturday"},
-		{8, 12, "Second Saturday"},
-		{9, 9, "Second Saturday"},
-		{10, 14, "Second Saturday"},
-		{11, 11, "Second Saturday"},
-		{12, 9, "Second Saturday"},
+		{1, 14, "Second Saturday", PublicHoliday},
+		{2, 11, "Second Saturday", PublicHoliday},
+		{3, 11, "Second Saturday", PublicHoliday},
+		{4, 8, "Second Saturday", PublicHoliday},
+		{5, 13, "Second Saturday", PublicHoliday},
+		{6, 10, "Second Saturday", PublicHoliday},
+		{7, 8, "Second Saturday", PublicHoliday},
+		{8, 12, "Second Saturday", PublicHoliday},
+		{9, 9, "Second Saturday", PublicHoliday},
+		{10, 14, "Second Saturday", PublicHoliday},
+		{11, 11, "Second Saturday", PublicHoliday},
+		{12, 9, "Second Saturday", PublicHoliday},
 	}
 	check(t, year, dates, testdata)
 }

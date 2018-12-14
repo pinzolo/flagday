@@ -46,7 +46,7 @@ func Holidays(defs []Definition, year int) []Holiday {
 		// national holiday
 		if len(holidays) > 0 {
 			if !holiday.Time().Before(NationalHolidayStartDate) {
-				if last := holidays[len(holidays)-1]; last.Kind() == PublicHoliday {
+				if last := holidays[len(holidays)-1]; last.Kind() != SubstituteHoliday && last.Kind() != NationalHoliday {
 					if prev := holiday.Time().AddDate(0, 0, -2); last.Time().Equal(prev) {
 						ndate := holiday.Time().AddDate(0, 0, -1)
 						holidays = append(holidays, newNationalHoliday(year, int(ndate.Month()), ndate.Day()))
