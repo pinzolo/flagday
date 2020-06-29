@@ -138,6 +138,7 @@ func TestSubstituteHolidayGoldenWeekSunday5(t *testing.T) {
 func testSubstitute(t *testing.T, year int, dates []flagday.Holiday, testdata []expectedSubstitute) {
 	t.Helper()
 	testSubstituteNoOriginal(t, dates)
+	testSubstituteIsSubstituted(t, dates)
 	for _, td := range testdata {
 		testSubstituteInvalidOriginal(t, year, dates, td)
 	}
@@ -150,6 +151,17 @@ func testSubstituteNoOriginal(t *testing.T, dates []flagday.Holiday) {
 			if date.Original() == nil {
 				t.Errorf("Substitute holiday (%s) should have original holiday", s)
 				break
+			}
+		}
+	}
+}
+
+func testSubstituteIsSubstituted(t *testing.T, dates []flagday.Holiday) {
+	for _, date := range dates {
+		if date.Kind() == flagday.SubstituteHoliday {
+			if !date.Original().IsSubstituted() {
+				s := date.Original().Time().Format("2006/1/2")
+				t.Errorf("Substituted original holiday (%s) should have substituted flag", s)
 			}
 		}
 	}

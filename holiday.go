@@ -47,6 +47,10 @@ type Holiday interface {
 	IsSubstituted() bool
 }
 
+type substitutedSetter interface {
+	SetSubstituted(b bool)
+}
+
 type holiday struct {
 	def         *Definition
 	year        int
@@ -59,45 +63,49 @@ type holiday struct {
 	substituted bool
 }
 
-func (d holiday) Def() *Definition {
+func (d *holiday) Def() *Definition {
 	return d.def
 }
 
-func (d holiday) Year() int {
+func (d *holiday) Year() int {
 	return d.year
 }
 
-func (d holiday) Month() int {
+func (d *holiday) Month() int {
 	return d.month
 }
 
-func (d holiday) Day() int {
+func (d *holiday) Day() int {
 	return d.day
 }
 
-func (d holiday) Name() string {
+func (d *holiday) Name() string {
 	return d.name
 }
 
-func (d holiday) Kind() HolidayKind {
+func (d *holiday) Kind() HolidayKind {
 	return d.kind
 }
 
-func (d holiday) Time() time.Time {
+func (d *holiday) Time() time.Time {
 	return d.time
 }
 
-func (d holiday) Original() Holiday {
+func (d *holiday) Original() Holiday {
 	return d.original
 }
 
-func (d holiday) IsSubstituted() bool {
+func (d *holiday) IsSubstituted() bool {
 	return d.substituted
+}
+
+func (d *holiday) SetSubstituted(b bool) {
+	d.substituted = b
 }
 
 // NewHoliday returns new date with time.
 func NewHoliday(def *Definition, year, month, day int, name string, kind HolidayKind, original Holiday) Holiday {
-	return holiday{
+	return &holiday{
 		def:      def,
 		year:     year,
 		month:    month,

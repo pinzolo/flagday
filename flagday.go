@@ -60,6 +60,9 @@ func Holidays(defs []Definition, year int) []Holiday {
 		// Substitute holiday
 		substDate, err := substituteHolidayOf(holiday)
 		if err == nil {
+			if ss, ok := holiday.(substitutedSetter); ok {
+				ss.SetSubstituted(true)
+			}
 			holidays = append(holidays, substDate)
 		}
 	}
