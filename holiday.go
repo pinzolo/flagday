@@ -41,19 +41,22 @@ type Holiday interface {
 	// Time is time.Time instance of holiday (JST)
 	Time() time.Time
 	// Original is original holiday.
-	// This field is only set when holiday is substitute.
+	// This field is only set when holiday is substitute holiday.
 	Original() Holiday
+	// IsSubstituted returns that this holiday is substituted by substitute holiday.
+	IsSubstituted() bool
 }
 
 type holiday struct {
-	def      *Definition
-	year     int
-	month    int
-	day      int
-	name     string
-	kind     HolidayKind
-	time     time.Time
-	original Holiday
+	def         *Definition
+	year        int
+	month       int
+	day         int
+	name        string
+	kind        HolidayKind
+	time        time.Time
+	original    Holiday
+	substituted bool
 }
 
 func (d holiday) Def() *Definition {
@@ -88,9 +91,13 @@ func (d holiday) Original() Holiday {
 	return d.original
 }
 
+func (d holiday) IsSubstituted() bool {
+	return d.substituted
+}
+
 // NewHoliday returns new date with time.
 func NewHoliday(def *Definition, year, month, day int, name string, kind HolidayKind, original Holiday) Holiday {
-	return &holiday{
+	return holiday{
 		def:      def,
 		year:     year,
 		month:    month,
