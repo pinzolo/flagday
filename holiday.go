@@ -40,16 +40,20 @@ type Holiday interface {
 	Kind() HolidayKind
 	// Time is time.Time instance of holiday (JST)
 	Time() time.Time
+	// Original is original holiday.
+	// This field is only set when holiday is substitute.
+	Original() Holiday
 }
 
 type holiday struct {
-	def   *Definition
-	year  int
-	month int
-	day   int
-	name  string
-	kind  HolidayKind
-	time  time.Time
+	def      *Definition
+	year     int
+	month    int
+	day      int
+	name     string
+	kind     HolidayKind
+	time     time.Time
+	original Holiday
 }
 
 func (d holiday) Def() *Definition {
@@ -80,33 +84,38 @@ func (d holiday) Time() time.Time {
 	return d.time
 }
 
+func (d holiday) Original() Holiday {
+	return d.original
+}
+
 // NewHoliday returns new date with time.
-func NewHoliday(def *Definition, year, month, day int, name string, kind HolidayKind) Holiday {
-	return holiday{
-		def:   def,
-		year:  year,
-		month: month,
-		day:   day,
-		name:  name,
-		kind:  kind,
-		time:  timeFrom(year, month, day),
+func NewHoliday(def *Definition, year, month, day int, name string, kind HolidayKind, original Holiday) Holiday {
+	return &holiday{
+		def:      def,
+		year:     year,
+		month:    month,
+		day:      day,
+		name:     name,
+		kind:     kind,
+		time:     timeFrom(year, month, day),
+		original: original,
 	}
 }
 
 func newPublicHoliday(def Definition, year, day int) Holiday {
-	return NewHoliday(&def, year, def.Month(), day, def.Name(), PublicHoliday)
+	return NewHoliday(&def, year, def.Month(), day, def.Name(), PublicHoliday, nil)
 }
 
 func newNationalHoliday(year, month, day int) Holiday {
-	return NewHoliday(nil, year, month, day, "国民の休日", NationalHoliday)
+	return NewHoliday(nil, year, month, day, "国民の休日", NationalHoliday, nil)
 }
 
-func newSubstituteHoliday(year, month, day int) Holiday {
-	return NewHoliday(nil, year, month, day, "振替休日", SubstituteHoliday)
+func newSubstituteHoliday(year, month, day int, original Holiday) Holiday {
+	return NewHoliday(nil, year, month, day, "振替休日", SubstituteHoliday, original)
 }
 
 func newImperialRelatedHoliday(def Definition, year, day int) Holiday {
-	return NewHoliday(&def, year, def.Month(), day, def.Name(), ImperialRelated)
+	return NewHoliday(&def, year, def.Month(), day, def.Name(), ImperialRelated, nil)
 }
 
 func jst() *time.Location {

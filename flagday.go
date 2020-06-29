@@ -143,5 +143,5 @@ func substituteHolidayOf(holiday Holiday) (Holiday, error) {
 	if holiday.Month() == 5 && (holiday.Day() == 3 || holiday.Day() == 4) {
 		day = 6
 	}
-	return newSubstituteHoliday(holiday.Year(), holiday.Month(), day), nil
+	return newSubstituteHoliday(holiday.Year(), holiday.Month(), day, holiday), nil
 }
