@@ -3,6 +3,7 @@ package flagday_test
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/pinzolo/flagday"
 )
@@ -20,6 +21,11 @@ func TestTime(t *testing.T) {
 	if !isSameDef(*d.Def(), def) {
 		t.Error("holiday should have same definition")
 	}
+	testTimeFields(t, tm, d)
+}
+
+func testTimeFields(t *testing.T, tm time.Time, d flagday.Holiday) {
+	t.Helper()
 	if tm.Year() != d.Year() {
 		t.Errorf("converted time should have %d as year, but got %d", d.Year(), tm.Year())
 	}
