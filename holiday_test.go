@@ -1,8 +1,10 @@
-package flagday
+package flagday_test
 
 import (
 	"fmt"
 	"testing"
+
+	"github.com/pinzolo/flagday"
 )
 
 func TestTime(t *testing.T) {
@@ -10,7 +12,7 @@ func TestTime(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	d := FixedDateHoliday(def, 2017)
+	d := flagday.FixedDateHoliday(def, 2017)
 	tm := d.Time()
 	if d.Def() == nil {
 		t.Error("holiday should have own definition on public holiday")
@@ -41,8 +43,8 @@ func TestTime(t *testing.T) {
 	}
 }
 
-func getDef(name string, year int) (Definition, error) {
-	for _, def := range DefsInYear(year) {
+func getDef(name string, year int) (flagday.Definition, error) {
+	for _, def := range flagday.DefsInYear(year) {
 		if def.Name() == name {
 			return def, nil
 		}
@@ -50,7 +52,7 @@ func getDef(name string, year int) (Definition, error) {
 	return nil, fmt.Errorf("definition not found: %s", name)
 }
 
-func isSameDef(def1 Definition, def2 Definition) bool {
+func isSameDef(def1 flagday.Definition, def2 flagday.Definition) bool {
 	if def1.Type() != def2.Type() {
 		return false
 	}
