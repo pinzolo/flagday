@@ -56,8 +56,8 @@ func TestSubstituteHolidayGoldenWeekSunday3(t *testing.T) {
 	testHolidays(t, year, dates, testdata)
 	substituteTestdata := []expectedSubstitute{
 		{
-			original: expected{5, 3, "憲法記念日", flagday.PublicHoliday},
-			holiday:  expected{5, 6, "振替休日", flagday.SubstituteHoliday},
+			original: testdata[5], // 5/3
+			holiday:  testdata[8], // 5/6
 		},
 	}
 	testSubstitute(t, year, dates, substituteTestdata)
@@ -88,12 +88,12 @@ func TestSubstituteHolidayGoldenWeekSunday4(t *testing.T) {
 	testHolidays(t, year, dates, testdata)
 	substituteTestdata := []expectedSubstitute{
 		{
-			original: expected{5, 4, "みどりの日", flagday.PublicHoliday},
-			holiday:  expected{5, 6, "振替休日", flagday.SubstituteHoliday},
+			original: testdata[6], // 5/4
+			holiday:  testdata[8], // 5/6
 		},
 		{
-			original: expected{11, 23, "勤労感謝の日", flagday.PublicHoliday},
-			holiday:  expected{11, 24, "振替休日", flagday.SubstituteHoliday},
+			original: testdata[14], // 11/23
+			holiday:  testdata[15], // 11/24
 		},
 	}
 	testSubstitute(t, year, dates, substituteTestdata)
@@ -124,12 +124,12 @@ func TestSubstituteHolidayGoldenWeekSunday5(t *testing.T) {
 	testHolidays(t, year, dates, testdata)
 	substituteTestdata := []expectedSubstitute{
 		{
-			original: expected{5, 5, "こどもの日", flagday.PublicHoliday},
-			holiday:  expected{5, 6, "振替休日", flagday.SubstituteHoliday},
+			original: testdata[7], // 5/5
+			holiday:  testdata[8], // 5/6
 		},
 		{
-			original: expected{11, 3, "文化の日", flagday.PublicHoliday},
-			holiday:  expected{11, 4, "振替休日", flagday.SubstituteHoliday},
+			original: testdata[13], // 11/3
+			holiday:  testdata[14], // 11/4
 		},
 	}
 	testSubstitute(t, year, dates, substituteTestdata)
