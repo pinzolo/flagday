@@ -26,7 +26,7 @@ func TestSubstituteHolidayBefore(t *testing.T) {
 	}
 	year := 1968
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
 
 func TestSubstituteHolidayGoldenWeekSunday3(t *testing.T) {
@@ -51,14 +51,14 @@ func TestSubstituteHolidayGoldenWeekSunday3(t *testing.T) {
 	}
 	year := 2009
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 	substituteTestdata := []expectedSubstitute{
 		{
 			original: expected{5, 3, "憲法記念日", PublicHoliday},
 			holiday:  expected{5, 6, "振替休日", SubstituteHoliday},
 		},
 	}
-	checkSubstitute(t, year, dates, substituteTestdata)
+	testSubstitute(t, year, dates, substituteTestdata)
 }
 
 func TestSubstituteHolidayGoldenWeekSunday4(t *testing.T) {
@@ -83,7 +83,7 @@ func TestSubstituteHolidayGoldenWeekSunday4(t *testing.T) {
 	}
 	year := 2008
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 	substituteTestdata := []expectedSubstitute{
 		{
 			original: expected{5, 4, "みどりの日", PublicHoliday},
@@ -94,7 +94,7 @@ func TestSubstituteHolidayGoldenWeekSunday4(t *testing.T) {
 			holiday:  expected{11, 24, "振替休日", SubstituteHoliday},
 		},
 	}
-	checkSubstitute(t, year, dates, substituteTestdata)
+	testSubstitute(t, year, dates, substituteTestdata)
 }
 
 func TestSubstituteHolidayGoldenWeekSunday5(t *testing.T) {
@@ -119,7 +119,7 @@ func TestSubstituteHolidayGoldenWeekSunday5(t *testing.T) {
 	}
 	year := 2013
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 	substituteTestdata := []expectedSubstitute{
 		{
 			original: expected{5, 5, "こどもの日", PublicHoliday},
@@ -130,18 +130,18 @@ func TestSubstituteHolidayGoldenWeekSunday5(t *testing.T) {
 			holiday:  expected{11, 4, "振替休日", SubstituteHoliday},
 		},
 	}
-	checkSubstitute(t, year, dates, substituteTestdata)
+	testSubstitute(t, year, dates, substituteTestdata)
 }
 
-func checkSubstitute(t *testing.T, year int, dates []Holiday, testdata []expectedSubstitute) {
+func testSubstitute(t *testing.T, year int, dates []Holiday, testdata []expectedSubstitute) {
 	t.Helper()
-	checkSubstituteNoOriginal(t, dates)
+	testSubstituteNoOriginal(t, dates)
 	for _, td := range testdata {
-		checkSubstituteInvalidOriginal(t, year, dates, td)
+		testSubstituteInvalidOriginal(t, year, dates, td)
 	}
 }
 
-func checkSubstituteNoOriginal(t *testing.T, dates []Holiday) {
+func testSubstituteNoOriginal(t *testing.T, dates []Holiday) {
 	for _, date := range dates {
 		if date.Kind() == SubstituteHoliday {
 			s := date.Time().Format("2006/1/2")
@@ -153,12 +153,12 @@ func checkSubstituteNoOriginal(t *testing.T, dates []Holiday) {
 	}
 }
 
-func checkSubstituteInvalidOriginal(t *testing.T, year int, dates []Holiday, td expectedSubstitute) {
+func testSubstituteInvalidOriginal(t *testing.T, year int, dates []Holiday, td expectedSubstitute) {
 	found := false
 	for _, date := range dates {
 		if date.Month() == td.holiday.month && date.Day() == td.holiday.day {
 			found = true
-			checkDate(t, year, date.Original(), td.original)
+			testDate(t, year, date.Original(), td.original)
 		}
 	}
 	if !found {

@@ -33,7 +33,7 @@ func BenchmarkInYearWithoutCache(b *testing.B) {
 	}
 }
 
-func check(t *testing.T, year int, dates []Holiday, testdata []expected) {
+func testHolidays(t *testing.T, year int, dates []Holiday, testdata []expected) {
 	t.Helper()
 	if len(testdata) != len(dates) {
 		t.Errorf("holiday count is not match, expected %d but got %d", len(testdata), len(dates))
@@ -41,11 +41,11 @@ func check(t *testing.T, year int, dates []Holiday, testdata []expected) {
 	}
 	for i, td := range testdata {
 		date := dates[i]
-		checkDate(t, year, date, td)
+		testDate(t, year, date, td)
 	}
 }
 
-func checkDate(t *testing.T, year int, date Holiday, td expected) {
+func testDate(t *testing.T, year int, date Holiday, td expected) {
 	t.Helper()
 	s := date.Time().Format("2006/1/2")
 	if date.Year() != year {
@@ -87,7 +87,7 @@ func TestInYear(t *testing.T) {
 	}
 	year := 2017
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
 
 func TestIn2018(t *testing.T) {
@@ -115,7 +115,7 @@ func TestIn2018(t *testing.T) {
 	}
 	year := 2018
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
 
 func TestIn2019(t *testing.T) {
@@ -145,7 +145,7 @@ func TestIn2019(t *testing.T) {
 	}
 	year := 2019
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
 
 func TestIn2020(t *testing.T) {
@@ -171,7 +171,7 @@ func TestIn2020(t *testing.T) {
 	}
 	year := 2020
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
 
 func TestIn2021(t *testing.T) {
@@ -195,7 +195,7 @@ func TestIn2021(t *testing.T) {
 	}
 	year := 2021
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
 
 func TestInMonth(t *testing.T) {
@@ -206,7 +206,7 @@ func TestInMonth(t *testing.T) {
 	}
 	year := 2017
 	dates := InMonth(year, 1)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 
 	dates = InMonth(year, 6)
 	if len(dates) != 0 {
@@ -219,7 +219,7 @@ func TestPublicHolidayOf(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	checkDate(t, 2017, d, expected{11, 23, "勤労感謝の日", PublicHoliday})
+	testDate(t, 2017, d, expected{11, 23, "勤労感謝の日", PublicHoliday})
 	_, err = PublicHolidayOf(2017, 11, 24)
 	if err == nil {
 		t.Errorf("2017/11/24 is not public holiday, PublicHolidayOf should return error")
@@ -240,7 +240,7 @@ func TestPublicHolidayTimeOf(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	checkDate(t, 2017, d, expected{11, 23, "勤労感謝の日", PublicHoliday})
+	testDate(t, 2017, d, expected{11, 23, "勤労感謝の日", PublicHoliday})
 	_, err = PublicHolidayTimeOf(timeFrom(2017, 11, 24))
 	if err == nil {
 		t.Errorf("2017/11/24 is not public holiday, PublicHolidayOf should return error")

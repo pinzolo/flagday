@@ -73,7 +73,7 @@ func TestCustomHoliday(t *testing.T) {
 		{11, 11, "Second Saturday", PublicHoliday},
 		{12, 9, "Second Saturday", PublicHoliday},
 	}
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
 
 func TestNoFuncDefinition(t *testing.T) {

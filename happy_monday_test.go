@@ -24,7 +24,7 @@ func TestHappyMondayBefore(t *testing.T) {
 	}
 	year := 1999
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
 
 func TestHappyMonday1st(t *testing.T) {
@@ -47,7 +47,7 @@ func TestHappyMonday1st(t *testing.T) {
 	}
 	year := 2000
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
 
 func TestHappyMonday2nd(t *testing.T) {
@@ -71,7 +71,7 @@ func TestHappyMonday2nd(t *testing.T) {
 	}
 	year := 2003
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 
 	testdata = []expected{
 		{1, 1, "元日", PublicHoliday},
@@ -92,5 +92,5 @@ func TestHappyMonday2nd(t *testing.T) {
 	}
 	year = 2004
 	dates = InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }

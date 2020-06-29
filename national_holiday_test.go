@@ -24,7 +24,7 @@ func TestNationalHoliday(t *testing.T) {
 	}
 	year := 2015
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
 
 func TestNationalHolidayBefore(t *testing.T) {
@@ -47,5 +47,5 @@ func TestNationalHolidayBefore(t *testing.T) {
 	}
 	year := 1982
 	dates := InYear(year)
-	check(t, year, dates, testdata)
+	testHolidays(t, year, dates, testdata)
 }
