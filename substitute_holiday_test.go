@@ -147,10 +147,9 @@ func testSubstitute(t *testing.T, year int, dates []flagday.Holiday, testdata []
 func testSubstituteNoOriginal(t *testing.T, dates []flagday.Holiday) {
 	for _, date := range dates {
 		if date.Kind() == flagday.SubstituteHoliday {
-			s := date.Time().Format("2006/1/2")
 			if date.Original() == nil {
+				s := date.Time().Format("2006/1/2")
 				t.Errorf("Substitute holiday (%s) should have original holiday", s)
-				break
 			}
 		}
 	}
