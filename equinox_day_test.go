@@ -1,6 +1,10 @@
-package flagday
+package flagday_test
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/pinzolo/flagday"
+)
 
 type equinoxDay struct {
 	year int
@@ -321,7 +325,7 @@ var autumnEquinoxDays = []equinoxDay{
 
 func TestSpringEquinoxDay(t *testing.T) {
 	for _, ed := range springEquinoxDays {
-		d, err := PublicHolidayOf(ed.year, 3, ed.day)
+		d, err := flagday.PublicHolidayOf(ed.year, 3, ed.day)
 		if err != nil {
 			t.Errorf("spring equinox day in %d expects %d, but got %d", ed.year, ed.day, d.Day())
 		}
@@ -330,7 +334,7 @@ func TestSpringEquinoxDay(t *testing.T) {
 
 func TestAutumnEquinoxDay(t *testing.T) {
 	for _, ed := range autumnEquinoxDays {
-		d, err := PublicHolidayOf(ed.year, 9, ed.day)
+		d, err := flagday.PublicHolidayOf(ed.year, 9, ed.day)
 		if err != nil {
 			t.Errorf("autumn equinox day in %d expects %d, but got %d", ed.year, ed.day, d.Day())
 		}
