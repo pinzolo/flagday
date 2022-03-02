@@ -225,6 +225,31 @@ func TestIn2022(t *testing.T) {
 	testHolidays(t, year, dates, testdata)
 }
 
+func TestIn2023(t *testing.T) {
+	testdata := []expected{
+		{1, 1, "元日", flagday.PublicHoliday},
+		{1, 2, "振替休日", flagday.SubstituteHoliday},
+		{1, 9, "成人の日", flagday.PublicHoliday},
+		{2, 11, "建国記念の日", flagday.PublicHoliday},
+		{2, 23, "天皇誕生日", flagday.PublicHoliday},
+		{3, 21, "春分の日", flagday.PublicHoliday},
+		{4, 29, "昭和の日", flagday.PublicHoliday},
+		{5, 3, "憲法記念日", flagday.PublicHoliday},
+		{5, 4, "みどりの日", flagday.PublicHoliday},
+		{5, 5, "こどもの日", flagday.PublicHoliday},
+		{7, 17, "海の日", flagday.PublicHoliday},
+		{8, 11, "山の日", flagday.PublicHoliday},
+		{9, 18, "敬老の日", flagday.PublicHoliday},
+		{9, 23, "秋分の日", flagday.PublicHoliday},
+		{10, 9, "スポーツの日", flagday.PublicHoliday},
+		{11, 3, "文化の日", flagday.PublicHoliday},
+		{11, 23, "勤労感謝の日", flagday.PublicHoliday},
+	}
+	year := 2023
+	dates := flagday.InYear(year)
+	testHolidays(t, year, dates, testdata)
+}
+
 func TestInMonth(t *testing.T) {
 	testdata := []expected{
 		{1, 1, "元日", flagday.PublicHoliday},
