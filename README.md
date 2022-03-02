@@ -1,6 +1,6 @@
 # flagday
 
-[![Build Status](https://travis-ci.org/pinzolo/flagday.png)](http://travis-ci.org/pinzolo/flagday)
+[![Test](https://github.com/pinzolo/flagday/actions/workflows/test.yml/badge.svg)](https://github.com/pinzolo/flagday/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/pinzolo/flagday/badge.svg?branch=master)](https://coveralls.io/github/pinzolo/flagday?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/pinzolo/flagday)](https://goreportcard.com/report/github.com/pinzolo/flagday)
 [![Godoc](http://img.shields.io/badge/godoc-reference-blue.svg)](https://godoc.org/github.com/pinzolo/flagday)
